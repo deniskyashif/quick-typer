@@ -1,11 +1,13 @@
-<div>
+<div class="main">
     <h1>{{title}}</h1>
-    <div>
-      <app-details></app-details>
-      <app-text></app-text>
-      <app-input></app-input>
-    </div>
-    <div>
-      <button>Start Over</button>
-    </div>
+    <app-details
+      [elapsedSeconds]="elapsedSeconds$ | async"
+      [score]="score$ | async"
+    ></app-details>
+    <app-text></app-text>
+    <app-input></app-input>
+    <app-controls [isGameStarted]="isGameStarted$ | async"
+      (start)="startGame($event)"
+      (stop)="stopGame($event)"
+    ></app-controls>
 </div>
