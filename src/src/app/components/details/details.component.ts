@@ -1,18 +1,20 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
-  styleUrls: ['./details.component.scss']
+  styleUrls: ['./details.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailsComponent {
 
   @Input()
-  elapsedSeconds: number;
+  remainingSeconds: number;
 
   @Input()
   score: number;
 
-  constructor() { }
+  truncate = Math.trunc;
 
+  constructor() { }
 }

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { AppState } from './state/state';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { GameState } from './state/state';
 import { Store, select } from '@ngrx/store';
 import { Observable, Subscription, interval } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -8,39 +8,46 @@ import { StartGame, EndGame, ProcessGame } from './state/actions';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
 
-  title = 'Quick Typer';
+  private timer: Subscription;
+  private typedText: string = '';
 
   isGameStarted$: Observable<boolean>;
-  elapsedSeconds$: Observable<number>;
+  remainingSeconds$: Observable<number>;
   score$: Observable<number>;
 
-  timer: Subscription;
-
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<GameState>) { }
 
   ngOnInit() {
     const game = this.store.select('game');
 
     this.isGameStarted$ = game.pipe(select(s => s.isGameStarted));
-    this.elapsedSeconds$ = game.pipe(select(s => s.elapsedSeconds));
+    this.remainingSeconds$ = game.pipe(select(s => s.remainingSeconds));
     this.score$ = game.pipe(select(s => s.score));
   }
 
-  startGame(time: Date) {
-    this.store.dispatch(new StartGame(time));
+  startGame() {
+    this.store.dispatch(new StartGame(new Date()));
+
     this.timer = interval(1000)
           .pipe(take(60))
-          .subscribe(n => this.store.dispatch(new ProcessGame({ entries: n, time: new Date() })),
-                     console.log,
-                     () => this.store.dispatch(new EndGame(new Date())));
+          .subscribe(() =>
+            this.store.dispatch(new ProcessGame({ typedText: this.typedText, time: new Date() })),
+          console.error,
+          () => this.store.dispatch(new EndGame()));
   }
 
-  stopGame(date: Date) {
+  stopGame() {
     this.timer.unsubscribe();
-    this.store.dispatch(new EndGame(date));
+    this.store.dispatch(new EndGame());
+  }
+
+  onInputChange(typedText: string) {
+    this.typedText = typedText;
+    this.store.dispatch(new ProcessGame({ typedText: this.typedText, time: new Date() }));
   }
 }

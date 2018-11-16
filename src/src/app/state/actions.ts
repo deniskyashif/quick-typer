@@ -3,7 +3,7 @@ import { Action } from '@ngrx/store';
 export enum ActionTypes {
   StartGame = '[GAME] Start',
   EndGame = '[GAME] End',
-  ProcessGame = '[GAME] Process'
+  ProcessGame = '[GAME] Process Game',
 };
 
 export class StartGame implements Action {
@@ -15,13 +15,13 @@ export class StartGame implements Action {
 export class EndGame implements Action {
   readonly type = ActionTypes.EndGame;
 
-  constructor(public payload: Date) { }
+  constructor() { }
 }
 
 export class ProcessGame implements Action {
   readonly type = ActionTypes.ProcessGame;
 
-  constructor(public payload: { entries: number, time: Date }) { }
+  constructor(public payload: { typedText: string, time: Date }) { }
 }
 
 export type ActionsUnion = StartGame | EndGame | ProcessGame;
