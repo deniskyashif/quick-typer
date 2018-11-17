@@ -1,10 +1,13 @@
 <div class="main">
     <h1>Quick Typer</h1>
     <app-details
-      [remainingSeconds]="remainingSeconds$ | async"
+      [gameTimeInSeconds]="gameTimeInSeconds"
+      [elapsedSeconds]="elapsedSeconds$ | async"
       [score]="score$ | async">
     </app-details>
-    <app-text></app-text>
+    <app-text
+      [typingState]="typingState$ | async"
+    ></app-text>
     <app-input (inputChange)="onInputChange($event)"
       [isGameStarted]="isGameStarted$ | async">
     </app-input>

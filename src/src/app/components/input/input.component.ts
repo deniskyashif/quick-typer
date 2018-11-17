@@ -17,7 +17,6 @@ export class InputComponent implements OnChanges {
   @ViewChild('textInput')
   textInput: ElementRef;
 
-
   constructor() { }
 
   onInputChange(text) {

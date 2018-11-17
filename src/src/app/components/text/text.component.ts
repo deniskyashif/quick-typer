@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { TypingState } from 'src/app/state/state';
 
 @Component({
   selector: 'app-text',
@@ -8,7 +9,7 @@ import { Component, Input } from '@angular/core';
 export class TextComponent {
 
   @Input()
-  text;
+  typingState: TypingState;
 
   constructor() { }
 

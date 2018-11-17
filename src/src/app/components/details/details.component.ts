@@ -9,12 +9,13 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 export class DetailsComponent {
 
   @Input()
-  remainingSeconds: number;
+  gameTimeInSeconds: number;
+
+  @Input()
+  elapsedSeconds: number;
 
   @Input()
   score: number;
-
-  truncate = Math.trunc;
 
   constructor() { }
 }

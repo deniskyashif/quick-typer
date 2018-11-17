@@ -3,7 +3,8 @@ import { Action } from '@ngrx/store';
 export enum ActionTypes {
   StartGame = '[GAME] Start',
   EndGame = '[GAME] End',
-  ProcessGame = '[GAME] Process Game',
+  ProcessInput = '[GAME] Process Input',
+  TimeStep = '[GAME] Time Step'
 };
 
 export class StartGame implements Action {
@@ -15,13 +16,19 @@ export class StartGame implements Action {
 export class EndGame implements Action {
   readonly type = ActionTypes.EndGame;
 
-  constructor() { }
+  constructor(public payload: Date) { }
 }
 
-export class ProcessGame implements Action {
-  readonly type = ActionTypes.ProcessGame;
+export class ProcessInput implements Action {
+  readonly type = ActionTypes.ProcessInput;
 
   constructor(public payload: { typedText: string, time: Date }) { }
 }
 
-export type ActionsUnion = StartGame | EndGame | ProcessGame;
+export class TimeStep implements Action {
+  readonly type = ActionTypes.TimeStep;
+
+  constructor(public payload: Date) { }
+}
+
+export type ActionsUnion = StartGame | EndGame | ProcessInput | TimeStep;
