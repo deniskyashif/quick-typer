@@ -34,13 +34,13 @@ export class InputComponent implements OnChanges, AfterViewChecked {
     const hasGameJustStarted = changes.isGameStarted.previousValue === false
           && changes.isGameStarted.currentValue === true;
 
-    if(hasGameJustStarted) {
+    if (hasGameJustStarted) {
       this.textInput.nativeElement.value = '';
     }
   }
 
   ngAfterViewChecked() {
-    if(this.isGameStarted && !this.textInput.nativeElement.value) {
+    if (this.isGameStarted && !this.textInput.nativeElement.value) {
       this.textInput.nativeElement.focus();
     }
   }

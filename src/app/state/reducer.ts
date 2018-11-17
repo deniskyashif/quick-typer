@@ -1,10 +1,10 @@
-import { GameState, getInitialState, TypingState } from "./state";
+import { GameState, getInitialState, TypingState } from './state';
 import { ActionsUnion, ActionTypes } from './actions';
 import { calculateGrossWpm } from './../services/words-per-minute';
 
 export function reducer(state: GameState = getInitialState(), action: ActionsUnion): GameState {
 
-  switch(action.type) {
+  switch (action.type) {
     case ActionTypes.StartGame:
       const text = 'The quick brown fox jumped over the lazy dog.';
       return {
@@ -63,11 +63,11 @@ function getSecondsInRange(from: Date, to: Date): number {
 function inferTypingState(text: string, typedText: string): TypingState {
   let correct = '', mistyped = '', remaining = '';
 
-  for(let i = 0; i < text.length; i++) {
+  for (let i = 0; i < text.length; i++) {
     const char = text[i];
 
-    if(i < typedText.length) {
-      if(!mistyped.length && typedText[i] === char) {
+    if (i < typedText.length) {
+      if (!mistyped.length && typedText[i] === char) {
         correct += char;
       } else {
         mistyped += char;

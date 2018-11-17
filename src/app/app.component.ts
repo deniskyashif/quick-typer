@@ -15,8 +15,6 @@ export class AppComponent implements OnInit {
 
   private timer: Subscription;
 
-  readonly gameTimeInSeconds = 60;
-
   isGameStarted$: Observable<boolean>;
   elapsedSeconds$: Observable<number>;
   score$: Observable<number>;
@@ -35,17 +33,16 @@ export class AppComponent implements OnInit {
     this.typingState$ = game$.pipe(select(s => s.typingState));
   }
 
-  startGame() {
-    this.store.dispatch(new StartGame(new Date()));
+  startGame(time) {
+    this.store.dispatch(new StartGame(time));
 
     this.timer = interval(1000)
-          .pipe(take(this.gameTimeInSeconds))
           .subscribe(() => this.store.dispatch(new TimeStep(new Date())));
   }
 
-  endGame() {
+  endGame(time) {
     this.timer.unsubscribe();
-    this.store.dispatch(new EndGame(new Date()));
+    this.store.dispatch(new EndGame(time));
   }
 
   onInputChange(textAtTime: { typedText: string, time: Date }) {

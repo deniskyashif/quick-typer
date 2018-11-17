@@ -9,9 +9,6 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 export class DetailsComponent {
 
   @Input()
-  gameTimeInSeconds: number;
-
-  @Input()
   elapsedSeconds: number;
 
   @Input()

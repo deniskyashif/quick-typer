@@ -5,7 +5,7 @@ export enum ActionTypes {
   EndGame = '[GAME] End',
   ProcessInput = '[GAME] Process Input',
   TimeStep = '[GAME] Time Step'
-};
+}
 
 export class StartGame implements Action {
   readonly type = ActionTypes.StartGame;

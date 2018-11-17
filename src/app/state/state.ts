@@ -25,5 +25,5 @@ export function getInitialState(): GameState {
       mistyped: '',
       remaining: ''
     }
-  }
+  };
 }
