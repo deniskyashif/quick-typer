@@ -40,18 +40,15 @@ export class AppComponent implements OnInit {
 
     this.timer = interval(1000)
           .pipe(take(this.gameTimeInSeconds))
-          .subscribe(() =>
-            this.store.dispatch(new TimeStep(new Date())),
-            console.error,
-            () => this.store.dispatch(new EndGame(new Date())));
+          .subscribe(() => this.store.dispatch(new TimeStep(new Date())));
   }
 
-  stopGame() {
+  endGame() {
     this.timer.unsubscribe();
     this.store.dispatch(new EndGame(new Date()));
   }
 
-  onInputChange(typedText: string) {
-    this.store.dispatch(new ProcessInput({ typedText, time: new Date() }));
+  onInputChange(textAtTime: { typedText: string, time: Date }) {
+    this.store.dispatch(new ProcessInput(textAtTime));
   }
 }

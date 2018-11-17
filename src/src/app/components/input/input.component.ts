@@ -1,4 +1,15 @@
-import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy, ElementRef, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Output,
+  EventEmitter,
+  Input,
+  ChangeDetectionStrategy,
+  ElementRef,
+  ViewChild,
+  OnChanges,
+  SimpleChanges,
+  AfterViewChecked
+} from '@angular/core';
 
 @Component({
   selector: 'app-input',
@@ -6,27 +17,35 @@ import { Component, Output, EventEmitter, Input, ChangeDetectionStrategy, Elemen
   styleUrls: ['./input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class InputComponent implements OnChanges {
+export class InputComponent implements OnChanges, AfterViewChecked {
 
   @Input()
   isGameStarted: boolean;
 
   @Output()
-  inputChange = new EventEmitter<string>();
+  inputChange = new EventEmitter<{ typedText: string, time: Date }>();
 
   @ViewChild('textInput')
   textInput: ElementRef;
 
   constructor() { }
 
-  onInputChange(text) {
-    this.inputChange.emit(text);
+  ngOnChanges(changes: SimpleChanges) {
+    const hasGameJustStarted = changes.isGameStarted.previousValue === false
+          && changes.isGameStarted.currentValue === true;
+
+    if(hasGameJustStarted) {
+      this.textInput.nativeElement.value = '';
+    }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if(changes.isGameStarted.currentValue === true) {
-      this.textInput.nativeElement.value = '';
+  ngAfterViewChecked() {
+    if(this.isGameStarted && !this.textInput.nativeElement.value) {
       this.textInput.nativeElement.focus();
     }
+  }
+
+  onInputChange(typedText) {
+    this.inputChange.emit({ typedText, time: new Date() });
   }
 }

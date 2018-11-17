@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { TypingState } from 'src/app/state/state';
 
 @Component({
@@ -6,11 +6,22 @@ import { TypingState } from 'src/app/state/state';
   templateUrl: './text.component.html',
   styleUrls: ['./text.component.scss']
 })
-export class TextComponent {
+export class TextComponent implements OnChanges {
+
+  @Input()
+  text: string;
 
   @Input()
   typingState: TypingState;
 
+  @Output()
+  typingComplete = new EventEmitter<Date>();
+
   constructor() { }
 
+  ngOnChanges(changes: SimpleChanges) {
+    if(this.text && this.typingState.correct === this.text) {
+      this.typingComplete.emit(new Date());
+    }
+  }
 }

@@ -6,7 +6,7 @@ export function reducer(state: GameState = getInitialState(), action: ActionsUni
 
   switch(action.type) {
     case ActionTypes.StartGame:
-      const text = 'The brown fox jumped over the crazy dog.';
+      const text = 'The quick brown fox jumped over the lazy dog.';
       return {
         isGameStarted: true,
         startTime: action.payload,
@@ -40,7 +40,6 @@ export function reducer(state: GameState = getInitialState(), action: ActionsUni
       };
 
     case ActionTypes.ProcessInput:
-      debugger;
       const { typedText, time } = action.payload;
       const elapsedSecondsAtProcessInput = getSecondsInRange(state.startTime, time)
       const typingState = inferTypingState(state.text, typedText);

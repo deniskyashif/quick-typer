@@ -6,13 +6,15 @@
       [score]="score$ | async">
     </app-details>
     <app-text
+      [text]="text$ | async"
       [typingState]="typingState$ | async"
-    ></app-text>
+      (typingComplete)="endGame($event)">
+    </app-text>
     <app-input (inputChange)="onInputChange($event)"
       [isGameStarted]="isGameStarted$ | async">
     </app-input>
     <app-controls [isGameStarted]="isGameStarted$ | async"
       (start)="startGame($event)"
-      (stop)="stopGame($event)"
-    ></app-controls>
+      (stop)="endGame($event)">
+    </app-controls>
 </div>
