@@ -1,5 +1,6 @@
 export interface GameState {
   readonly isGameStarted: boolean;
+  readonly isGameLoading: boolean;
   readonly startTime: Date;
   readonly score: number;
   readonly elapsedSeconds: number;
@@ -16,6 +17,7 @@ export interface TypingState {
 export function getInitialState(): GameState {
   return {
     isGameStarted: false,
+    isGameLoading: false,
     startTime: null,
     score: 0,
     elapsedSeconds: 0,

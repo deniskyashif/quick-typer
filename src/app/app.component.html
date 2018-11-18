@@ -1,6 +1,7 @@
 <div class="main">
     <h1>Quick Typer</h1>
     <app-details
+      [isGameLoading]="isGameLoading$ | async"
       [elapsedSeconds]="elapsedSeconds$ | async"
       [score]="score$ | async">
     </app-details>

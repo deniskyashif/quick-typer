@@ -1,4 +1,7 @@
-<p>
+<p *ngIf="!isGameLoading">
   <span><strong>Elapsed:</strong>&nbsp; {{elapsedSeconds}} sec</span>&nbsp;
   <span><strong>WPM:</strong>&nbsp; {{score}}</span>
+</p>
+<p *ngIf="isGameLoading">
+  Loading...
 </p>

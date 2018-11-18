@@ -5,18 +5,23 @@ import { calculateGrossWpm } from './../services/words-per-minute';
 export function reducer(state: GameState = getInitialState(), action: ActionsUnion): GameState {
 
   switch (action.type) {
+    case ActionTypes.LoadGame:
+      return {
+        ...state,
+        isGameLoading: true
+      }
     case ActionTypes.StartGame:
-      const text = 'The quick brown fox jumped over the lazy dog.';
       return {
         isGameStarted: true,
-        startTime: action.payload,
+        isGameLoading: false,
+        startTime: action.payload.time,
         score: 0,
         elapsedSeconds: 0,
-        text,
+        text: action.payload.text,
         typingState: {
           correct: '',
           mistyped: '',
-          remaining: text
+          remaining: action.payload.text
         }
       };
 

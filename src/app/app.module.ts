@@ -8,6 +8,9 @@ import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { reducer } from './state/reducer';
 import { ControlsComponent } from './components/controls/controls.component';
+import { EffectsModule } from '@ngrx/effects';
+import { GameEffects } from './state/effects';
+import { TextApiService } from './services/text.api.service';
 
 @NgModule({
   declarations: [
@@ -20,11 +23,12 @@ import { ControlsComponent } from './components/controls/controls.component';
   imports: [
     BrowserModule,
     StoreModule.forRoot({ game: reducer }),
+    EffectsModule.forRoot([GameEffects]),
     StoreDevtoolsModule.instrument({
       name: 'Quick Typer'
     })
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [ TextApiService ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }

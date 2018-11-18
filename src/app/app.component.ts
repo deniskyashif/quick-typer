@@ -3,7 +3,7 @@ import { GameState, TypingState } from './state/state';
 import { Store, select } from '@ngrx/store';
 import { Observable, Subscription, interval } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { StartGame, EndGame, ProcessInput, TimeStep } from './state/actions';
+import { StartGame, EndGame, ProcessInput, TimeStep, LoadGame } from './state/actions';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   private timer: Subscription;
 
   isGameStarted$: Observable<boolean>;
+  isGameLoading$: Observable<boolean>;
   elapsedSeconds$: Observable<number>;
   score$: Observable<number>;
   text$: Observable<string>;
@@ -27,6 +28,7 @@ export class AppComponent implements OnInit {
     const game$ = this.store.select('game');
 
     this.isGameStarted$ = game$.pipe(select(s => s.isGameStarted));
+    this.isGameLoading$ = game$.pipe(select(s => s.isGameLoading));
     this.elapsedSeconds$ = game$.pipe(select(s => s.elapsedSeconds));
     this.score$ = game$.pipe(select(s => s.score));
     this.text$ = game$.pipe(select(s => s.text));
@@ -34,7 +36,7 @@ export class AppComponent implements OnInit {
   }
 
   startGame(time) {
-    this.store.dispatch(new StartGame(time));
+    this.store.dispatch(new LoadGame());
 
     this.timer = interval(1000)
           .subscribe(() => this.store.dispatch(new TimeStep(new Date())));
