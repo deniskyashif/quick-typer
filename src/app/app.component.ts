@@ -7,8 +7,34 @@ import { StartGame, EndGame, ProcessInput, TimeStep, LoadGame } from './state/ac
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  template: `
+<div class="main">
+  <h1>Quick Typer</h1>
+  <app-details
+    [isGameLoading]="isGameLoading$ | async"
+    [elapsedSeconds]="elapsedSeconds$ | async"
+    [score]="score$ | async">
+  </app-details>
+  <app-text
+    [text]="text$ | async"
+    [typingState]="typingState$ | async"
+    (typingComplete)="endGame($event)">
+  </app-text>
+  <app-input (inputChange)="onInputChange($event)"
+    [isGameStarted]="isGameStarted$ | async">
+  </app-input>
+  <app-controls [isGameStarted]="isGameStarted$ | async"
+    (start)="startGame($event)"
+    (stop)="endGame($event)">
+  </app-controls>
+</div>
+`,
+  styles: [`
+.main {
+  padding: 5px 25px;
+  text-align: center;
+}
+`],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {

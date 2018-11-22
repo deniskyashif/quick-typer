@@ -3,8 +3,22 @@ import { TypingState } from 'src/app/state/state';
 
 @Component({
   selector: 'app-text',
-  templateUrl: './text.component.html',
-  styleUrls: ['./text.component.scss']
+  template: `
+<p>
+  <span class="typed-so-far">{{typingState.correct}}</span>
+  <span class="mistyped">{{typingState.mistyped}}</span>
+  <span class="remaining">{{typingState.remaining}}</span>
+</p>`,
+  styles: [`
+.typed-so-far {
+  background-color: lightgreen;
+}`,
+`.mistyped {
+  background-color: red;
+}`,
+`.remaining {
+  background-color: inherit;
+}`]
 })
 export class TextComponent implements OnChanges {
 

@@ -2,8 +2,11 @@ import { Component, EventEmitter, Output, Input, ChangeDetectionStrategy } from 
 
 @Component({
   selector: 'app-controls',
-  templateUrl: './controls.component.html',
-  styleUrls: ['./controls.component.scss'],
+  template: `
+<div>
+    <button (click)="onStartBtnClick()" *ngIf="!isGameStarted">Start</button>
+    <button (click)="onStopBtnClick()" *ngIf="isGameStarted">Reset</button>
+</div>`,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ControlsComponent {

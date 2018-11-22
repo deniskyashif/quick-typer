@@ -13,8 +13,17 @@ import {
 
 @Component({
   selector: 'app-input',
-  templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss'],
+  template: `
+<p>
+  <input #textInput class="text-input"
+    [disabled]="!isGameStarted"
+    (keyup)="onInputChange(textInput.value)" />
+</p>`,
+  styles: [`
+.text-input {
+  font-size: 30px;
+  width: 350px;
+}`],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InputComponent implements OnChanges, AfterViewChecked {

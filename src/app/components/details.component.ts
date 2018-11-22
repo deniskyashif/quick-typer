@@ -2,8 +2,15 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 
 @Component({
   selector: 'app-details',
-  templateUrl: './details.component.html',
-  styleUrls: ['./details.component.scss'],
+  template: `
+<p *ngIf="!isGameLoading">
+  <span><strong>Elapsed:</strong>&nbsp; {{elapsedSeconds}} sec</span>&nbsp;
+  <span><strong>WPM:</strong>&nbsp; {{score}}</span>
+</p>
+<p *ngIf="isGameLoading">
+  Loading...
+</p>
+`,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DetailsComponent {
